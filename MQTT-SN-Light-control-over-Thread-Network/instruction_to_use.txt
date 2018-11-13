@@ -1,0 +1,15 @@
+1. extract .zip file to archive folder of example.
+2. Example using nRF5 SDK for Thread and Zigbee v2.0,
+so copy this folder to 
+\nRF5_SDK_for_Thread_and_Zigbee_2.0.0\examples\thread\
+3. Open project with Keil ARM, but not build and flash
+immediately.
+3. nRF5 SDK for Thread and Zigbee v2.0 have a mistake.
+Length of received payload of MQTT-SN packet is not
+included. To slove this problem, refer to link:
+https://devzone.nordicsemi.com/f/nordic-q-a/40146/length-of-payload-of-mqtt-received-message-isn-t-provided-in-sdk
+4. Now, build & flash project without error and warning.
+
+My engligh skill is quite bad.
+I hope that you know what I writed and it's useful for you.
+Sorry for any language mistake! Thank for reading!
