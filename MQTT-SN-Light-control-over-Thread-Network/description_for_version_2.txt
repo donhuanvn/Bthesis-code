@@ -1,0 +1,23 @@
+topic 1: light/command - subscribing topic. This is to receive
+user control command.
+topic 2: light/info - publishing topic. This is to publish
+data to user.
+
+control command:
+<get> - to retreive light sensor value & state of relay.
+<get_mode> - to retreive current mode (<manual> or <auto>).
+<get_auto> - to retreive configuration of automatic mode
+		(<xxxx_yyy>, xxxx is interval in ms, 
+		yyy is threshold in lux).
+<set_mode_manual> - to set device operate in manual mode.
+<set_mode_auto> - to set device operate in automatic mode with
+		default automatic mode configuration.
+<set_mode_auto_xxxx_yyy> - ...
+<set_state_on> - to force state of relay open.
+<set_state_off> - to force state of relay close.
+
+automatic mode description: device get light sensor value & state of relay
+after each xxxx ms interval. This infomation is also sent to
+user. If the threshold yyy is higher than zero, relay will be
+controlled automatically. It will be opened if light sensor value is
+higher than threshold yyy, and vice versa.
