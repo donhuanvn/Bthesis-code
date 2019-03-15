@@ -1,0 +1,47 @@
+"ble_thread_dyn_light_control_v2_sdk"
+
+ADD FEATURE: forwarding message from BLE device to other thread nodes
+using CoAP protocol. It also support discovering nodes in current thread network.
+
+DETAIL DESCRIPTIONS: each node have both CoAP sever and CoAP client.
+	(*_*) Forwarding message: Forwarder receive message from BLE device. That
+	contain destination IPv6 address and data in BLE payload seperated by "_".
+		-------------------------------------------------------	
+		BLE payload format: "<destination IPv6 Address>_<data>"
+		-------------------------------------------------------	
+	Forwarder Node will send an unicast message with <data> in payload to Light 
+	Resource of destination node. Destination Node will handle this <data> and 
+	send response message to Forwarder CoAP Resource of Forwarder Node.
+		*****************************************************************
+		Request message: destination address is <destination IPv6 Address>
+			 	 resource: Light Resource
+				 type: confirmable
+				 code: PUT
+				 data: <data>
+		Response message: destination address is orginally Forwarder Node.
+				  resource: Forwarder Resource
+				  type: confirmable
+				  code: PUT
+				  data: lighting control data
+		*****************************************************************
+
+	(*_*) Discovering Thread Node: BLE device send "discover" command to
+	Discovering Node. Then, this node will send a discover message to Light Resource
+	that is empty message with non-confirmable type, CoAP POST code. Destination
+	Address is muticast mesh-local address "FF03::1". When a node receive this 
+	message, it will send back a response message including its Mesh-Local EID.
+	This response messsage have non-confirmable type, CoAP POST code that is 
+	sent to Forwarder Resource of orginally Discovering Node.
+		*****************************************************************
+		Request message: destination address is "FF03::1"
+			 	 resource: Light Resource
+				 type: non-confirmable
+				 code: POST
+				 data: NULL
+		Response message: destination address is orginally Discovering Node.
+				  resource: Forwarder Resource
+				  type: non-confirmable
+				  code: POST
+				  data: Mesh-Local EID of discovered node.
+		*****************************************************************
+(*_*)Do Ngoc Nhuan, 11/03/2019(*_*)
